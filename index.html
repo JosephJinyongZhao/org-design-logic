@@ -536,65 +536,6 @@ ul li::before{content:'\25C6';position:absolute;left:0;color:var(--accent);font-
 </div>
 </div>
 
-</div><!-- end presentation -->
-
-<!-- Navigation dots -->
-<div class="nav-bar" id="navBar"></div>
-
-<script>
-(function(){
-  const slides = document.querySelectorAll('.slide');
-  const total = slides.length;
-  const counter = document.getElementById('counter');
-  const prevBtn = document.getElementById('prevBtn');
-  const nextBtn = document.getElementById('nextBtn');
-  const navBar = document.getElementById('navBar');
-  let current = 0;
-  let isAnimating = false;
-
-  // Build dots
-  for(let i=0; i<total; i++){
-    const dot = document.createElement('button');
-    dot.className = 'nav-dot' + (i===0?' active':'');
-    dot.dataset.index = i;
-    dot.addEventListener('click', function(){ goTo(parseInt(this.dataset.index)); });
-    navBar.appendChild(dot);
-  }
-  const dots = navBar.querySelectorAll('.nav-dot');
-
-  function goTo(index){
-    if(isAnimating || index === current || index < 0 || index >= total) return;
-    isAnimating = true;
-    const prev = current;
-    current = index;
-    slides[prev].classList.remove('active');
-    slides[prev].classList.add('exit');
-    slides[current].classList.remove('exit');
-    slides[current].classList.add('active');
-    setTimeout(function(){ slides[prev].classList.remove('exit'); isAnimating = false; }, 600);
-    counter.textContent = (current+1) + ' / ' + total;
-    dots.forEach(function(d,i){ d.classList.toggle('active', i===current); });
-  }
-
-  prevBtn.addEventListener('click', function(){ goTo(current-1); });
-  nextBtn.addEventListener('click', function(){ goTo(current+1); });
-
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current+1); }
-    if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current-1); }
-  });
-
-  // Touch support
-  let touchStartX = 0;
-  document.addEventListener('touchstart', function(e){ touchStartX = e.changedTouches[0].screenX; });
-  document.addEventListener('touchend', function(e){
-    const diff = touchStartX - e.changedTouches[0].screenX;
-    if(Math.abs(diff) > 50){ diff > 0 ? goTo(current+1) : goTo(current-1); }
-  });
-})();
-</script>
-</body>
-</html>
 
 <!-- S19: 批判性审视标题 -->
 <div class="slide" data-index="18">
@@ -642,11 +583,11 @@ ul li::before{content:'\25C6';position:absolute;left:0;color:var(--accent);font-
 <h4 style="font-size:clamp(0.8rem,1.2vw,1rem)">人的质量</h4>
 <p style="font-size:clamp(0.65rem,0.9vw,0.8rem)">人比结构更重要</p>
 </div>
-<div class="card" style="padding:clamp(0.6rem,1vw,1rem);text-align:center;grid-column:1/-1;max-width:400px;margin:0 auto">
+</div>
+<div class="card a4" style="margin-top:12px;text-align:center;max-width:400px;margin-left:auto;margin-right:auto;padding:clamp(0.5rem,1vw,1rem)">
 <div style="font-size:28px;margin-bottom:4px">&#x1F916;</div>
 <h4 style="font-size:clamp(0.8rem,1.2vw,1rem)">AI瓦解</h4>
-<p style="font-size:clamp(0.65rem,0.9vw,0.8rem)">架构概念本身在过时</p>
-</div>
+<p style="font-size:clamp(0.65rem,0.9vw,0.8rem)">组织架构这个概念本身可能正在过时</p>
 </div>
 </div>
 </div>
@@ -714,3 +655,59 @@ ul li::before{content:'\25C6';position:absolute;left:0;color:var(--accent);font-
 <p class="a5" style="margin-top:36px;font-size:clamp(0.8rem,1.2vw,1rem);color:var(--text3)">那些敢于打破工业时代组织惯性的人，将获得最大的红利</p>
 </div>
 </div>
+</div><!-- end presentation -->
+
+<div class="nav-bar" id="navBar"></div>
+
+<script>
+(function(){
+  const slides = document.querySelectorAll('.slide');
+  const total = slides.length;
+  const counter = document.getElementById('counter');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const navBar = document.getElementById('navBar');
+  let current = 0;
+  let isAnimating = false;
+
+  for(let i=0; i<total; i++){
+    const dot = document.createElement('button');
+    dot.className = 'nav-dot' + (i===0?' active':'');
+    dot.dataset.index = i;
+    dot.addEventListener('click', function(){ goTo(parseInt(this.dataset.index)); });
+    navBar.appendChild(dot);
+  }
+  const dots = navBar.querySelectorAll('.nav-dot');
+
+  function goTo(index){
+    if(isAnimating || index === current || index < 0 || index >= total) return;
+    isAnimating = true;
+    const prev = current;
+    current = index;
+    slides[prev].classList.remove('active');
+    slides[prev].classList.add('exit');
+    slides[current].classList.remove('exit');
+    slides[current].classList.add('active');
+    setTimeout(function(){ slides[prev].classList.remove('exit'); isAnimating = false; }, 600);
+    counter.textContent = (current+1) + ' / ' + total;
+    dots.forEach(function(d,i){ d.classList.toggle('active', i===current); });
+  }
+
+  prevBtn.addEventListener('click', function(){ goTo(current-1); });
+  nextBtn.addEventListener('click', function(){ goTo(current+1); });
+
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); goTo(current+1); }
+    if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); goTo(current-1); }
+  });
+
+  let touchStartX = 0;
+  document.addEventListener('touchstart', function(e){ touchStartX = e.changedTouches[0].screenX; });
+  document.addEventListener('touchend', function(e){
+    const diff = touchStartX - e.changedTouches[0].screenX;
+    if(Math.abs(diff) > 50){ diff > 0 ? goTo(current+1) : goTo(current-1); }
+  });
+})();
+</script>
+</body>
+</html>
